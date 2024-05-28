@@ -41,6 +41,7 @@ class GameManger {
                     this.pendingUser.getSocket().send(JSON.stringify({
                         status: "started"
                     }));
+                    this.pendingUser.setTurn();
                     this.pendingUser = null;
                 }
             }
@@ -49,7 +50,7 @@ class GameManger {
                 const x = message.x;
                 const y = message.y;
                 if (game) {
-                    game.manageDraw(x, y);
+                    game.manageDraw(x, y, socket);
                 }
             }
             else if (message.type === "PENUP") {
