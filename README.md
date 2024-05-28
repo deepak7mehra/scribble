@@ -1,1 +1,1 @@
-creating a open source project similar to scribble
+creating a open source project similar to scribbl
