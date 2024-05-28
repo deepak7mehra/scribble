@@ -59,6 +59,36 @@ export class GameManger{
                     game.manageDraw(x,y);
                 }
             }
+
+            else if (message.type === "PENUP"){
+                const game : Game | undefined = this.games.find(g=>g.getPlayer1().getSocket()===socket || g.getPlayer2().getSocket()===socket)
+                if (game){
+                    game.penup();
+                }
+            }
+            else if (message.type === "PENDOWN"){
+                const game : Game | undefined = this.games.find(g=>g.getPlayer1().getSocket()===socket || g.getPlayer2().getSocket()===socket)
+                const x = message.x;
+                const y = message.y;
+                if (game){
+                    game.pendown(x,y);
+                }
+            }
+
+            else if (message.type === "CHANGEERASER"){
+                const game : Game | undefined = this.games.find(g=>g.getPlayer1().getSocket()===socket || g.getPlayer2().getSocket()===socket)
+                if (game){
+                    game.changeEraser();
+                }
+            }
+
+            else if (message.type === "CHANGEPENCIL"){
+                const game : Game | undefined = this.games.find(g=>g.getPlayer1().getSocket()===socket || g.getPlayer2().getSocket()===socket)
+                if (game){
+                    game.chnagePencil();
+                }
+
+            }
         })
     }
 

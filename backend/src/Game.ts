@@ -17,11 +17,13 @@ export class Game{
 
     manageDraw(x:any,y:any){
         this.player1.getSocket().send(JSON.stringify({
+            type:"DRAW",
             x:x,
             y:y
         }))
             
         this.player2.getSocket().send(JSON.stringify({
+            type:"DRAW",
             x:x,
             y:y
         }));
@@ -38,6 +40,58 @@ export class Game{
 
         this.player1.getSocket().close()
         this.player2.getSocket().close();
+    }
+
+    penup(){
+        this.player1.getSocket().send(JSON.stringify({
+            type:"PENUP",
+            
+        }))
+        this.player2.getSocket().send(JSON.stringify({
+            type:"PENUP",
+            
+        }))
+    }
+
+    pendown(x:any,y:any){
+        this.player1.getSocket().send(JSON.stringify({
+            type:"PENDOWN",
+            x:x,
+            y:y
+            
+        }))
+        this.player2.getSocket().send(JSON.stringify({
+            type:"PENDOWN",
+            x:x,
+            y:y
+            
+        }))
+    }
+
+    changeEraser(){
+        this.player1.getSocket().send(JSON.stringify({
+            type:"CHANGEERASER",
+            
+            
+        }))
+        this.player2.getSocket().send(JSON.stringify({
+            type:"CHANGEERASER",
+            
+            
+        }))
+    }
+
+    chnagePencil(){
+        this.player1.getSocket().send(JSON.stringify({
+            type:"CHANGEPENCIL",
+            
+            
+        }))
+        this.player2.getSocket().send(JSON.stringify({
+            type:"CHANGEPENCIL",
+            
+            
+        }))
     }
 
 }
