@@ -12,7 +12,11 @@ class Game {
     getPlayer2() {
         return this.player2;
     }
-    manageDraw(x, y) {
+    manageDraw(x, y, socket) {
+        if (this.player1.getSocket() === socket && this.player1.getTurn() === false)
+            return;
+        if (this.player2.getSocket() === socket && this.player2.getTurn() == false)
+            return;
         this.player1.getSocket().send(JSON.stringify({
             type: "DRAW",
             x: x,

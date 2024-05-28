@@ -1,4 +1,6 @@
 
+import { WebSocket } from "ws";
+
 import { Player } from "./Player";
 export class Game{
     private player1 : Player
@@ -15,7 +17,9 @@ export class Game{
         return this.player2;
     }
 
-    manageDraw(x:any,y:any){
+    manageDraw(x:any,y:any,socket:WebSocket){
+        if(this.player1.getSocket()===socket && this.player1.getTurn()===false) return;
+        if (this.player2.getSocket()===socket && this.player2.getTurn()==false) return;
         this.player1.getSocket().send(JSON.stringify({
             type:"DRAW",
             x:x,
