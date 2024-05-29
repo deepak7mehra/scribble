@@ -37,7 +37,7 @@ const words = [
 ];
 
 function getRandomNumber() {
-    return Math.floor(Math.random() * 50);
+    return Math.floor(Math.random() * words.length -1);
 }
 
 export function threeWords(): string[]{
