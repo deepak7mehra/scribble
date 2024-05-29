@@ -43,6 +43,7 @@ class GameManger {
                     }));
                     this.pendingUser.setTurn();
                     this.pendingUser = null;
+                    game.runGame();
                 }
             }
             else if (message.type === "DRAW") {
@@ -77,6 +78,26 @@ class GameManger {
                 const game = this.games.find(g => g.getPlayer1().getSocket() === socket || g.getPlayer2().getSocket() === socket);
                 if (game) {
                     game.chnagePencil();
+                }
+            }
+            else if (message.type === "rr") {
+                const game = this.games.find(g => g.getPlayer1().getSocket() === socket || g.getPlayer2().getSocket() === socket);
+                if (game) {
+                    game.rr();
+                }
+            }
+            else if (message.type === "SET_WORD") {
+                const game = this.games.find(g => g.getPlayer1().getSocket() === socket || g.getPlayer2().getSocket() === socket);
+                if (game) {
+                    const word = message.word;
+                    game.setWord(word);
+                }
+            }
+            else if (message.type === "OPP_WORD") {
+                const game = this.games.find(g => g.getPlayer1().getSocket() === socket || g.getPlayer2().getSocket() === socket);
+                if (game) {
+                    const word = message.word;
+                    game.checkWord(word, socket);
                 }
             }
         });

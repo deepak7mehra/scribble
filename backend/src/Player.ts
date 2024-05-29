@@ -2,7 +2,7 @@ import {WebSocket} from "ws";
 export class Player{
     private socket : WebSocket;
     private score : number;
-    private turn : boolean;
+    private turn : boolean; // turn to draw
     
     constructor(socket:WebSocket){
         this.socket = socket;
@@ -14,8 +14,12 @@ export class Player{
         return this.socket;
     }
 
-    getValue(){
+    getScore(){
         return this.score;
+    }
+
+    setScore(val:number){
+        this.score += val;
     }
 
     getTurn(){
@@ -23,7 +27,7 @@ export class Player{
     }
 
     setTurn(){
-        this.turn = true;
+        this.turn = !this.turn
     }
 
 
