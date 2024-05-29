@@ -2,19 +2,50 @@
 import { WebSocket } from "ws";
 
 import { Player } from "./Player";
+import { threeWords } from "./util";
 export class Game{
     private player1 : Player
     private player2 : Player
+    private rounds : number
+    private choosenWord :string
+    private attempts : number
+    private currRoundScore : number
+    
 
     constructor(player1:Player,player2:Player){
         this.player1 = player1;
         this.player2 = player2;
+        this.rounds = 2;
+        this.choosenWord = "";
+        this.attempts = 10;
+        this.currRoundScore = 1000;
+        
     }
     getPlayer1():Player{
         return this.player1;
     }
     getPlayer2():Player{
         return this.player2;
+    }
+    rr(){
+        
+    }
+
+    
+
+    runGame(){   
+            // send the three words
+           
+
+                const words = threeWords();
+                if (this.player1.getTurn()) this.player1.getSocket().send(JSON.stringify({words}));
+                if (this.player2.getTurn()) this.player2.getSocket().send(JSON.stringify({words}));
+                this.attempts = 9;
+                this.currRoundScore = 1000;
+                
+            
+            
+        
     }
 
     manageDraw(x:any,y:any,socket:WebSocket){
@@ -98,4 +129,45 @@ export class Game{
         }))
     }
 
+    setWord(word:string){
+        this.choosenWord = word;
+        this.player1.getSocket().send(JSON.stringify({
+            status:"WORD_SET"
+        }))
+        this.player2.getSocket().send(JSON.stringify({
+            status:"WORD_SET"
+        }))
+    }
+
+    checkWord(word:string,socket:WebSocket){
+        if (this.choosenWord === "") return;
+        if (this.player1.getSocket() === socket && this.player1.getTurn()) return;
+        if (this.player2.getSocket()===socket && this.player2.getTurn()) return;
+
+        if (this.choosenWord===word){
+            this.rounds--;
+            if (!this.player1.getTurn()) this.player1.setScore(this.currRoundScore);
+            if (!this.player2.getTurn()) this.player2.setScore(this.currRoundScore);
+
+            if (this.rounds>0){
+                this.choosenWord = "";
+                this.player1.setTurn();
+                this.player2.setTurn();
+                this.runGame();
+            }
+            else{
+                console.log("game over");
+
+                console.log("score of player1 = "+this.player1.getScore());
+                console.log("score of player2 ="+this.player2.getScore());
+                this.handleDisconnection();
+            }
+        }else{
+            this.attempts--;
+            this.currRoundScore = this.currRoundScore - 100;
+            if (this.attempts===0){
+                this.handleDisconnection();
+            }
+        }
+    }
 }

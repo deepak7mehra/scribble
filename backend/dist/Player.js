@@ -10,14 +10,17 @@ class Player {
     getSocket() {
         return this.socket;
     }
-    getValue() {
+    getScore() {
         return this.score;
+    }
+    setScore(val) {
+        this.score += val;
     }
     getTurn() {
         return this.turn;
     }
     setTurn() {
-        this.turn = true;
+        this.turn = !this.turn;
     }
 }
 exports.Player = Player;
