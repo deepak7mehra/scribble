@@ -101,6 +101,12 @@ class GameManger {
                 }
             }
         });
+        socket.on("close", () => {
+            console.log("socket is close");
+        });
+        socket.on("open", () => {
+            console.log("socket is open");
+        });
     }
 }
 exports.GameManger = GameManger;

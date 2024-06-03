@@ -35,6 +35,8 @@ export class Game{
 
     runGame(){   
             // send the three words
+            console.log("this is not exceuting ")
+            console.log(this.player1.getSocket().OPEN)
            
 
                 const words = threeWords();
@@ -48,6 +50,7 @@ export class Game{
                 }else{
                     this.player2.getSocket().send(JSON.stringify({status:"started"}));
                 }
+
                 this.attempts = 9;
                 this.currRoundScore = 1000;
                 
