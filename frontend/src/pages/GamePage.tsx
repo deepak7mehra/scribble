@@ -14,7 +14,7 @@ export default function GamePage() {
             socket.send(JSON.stringify({
                 type:"INIT_GAME"
             }))
-            console.log("sending game "+socket)
+            
         }
     },[socket])
 
@@ -25,6 +25,7 @@ export default function GamePage() {
 
             socket.onmessage = (x)=>{
                 const data = JSON.parse(x.data);
+                console.log(data)
                 if (data.status==="started"){
                     setWaiting(false);
                 }
@@ -32,17 +33,25 @@ export default function GamePage() {
                 if (data.status === "GAMEOVER"){
                     navigate("/")
                 }
+
+                if (data.status === "SEL_WORD"){
+                    console.log("INside word")
+                }
             }
         }
     },[socket]);
 
     if (socket===null) return <div>connecting ... </div>
   return (
-    <div>
+    <div >
       {waiting && <div>waiting for user to join</div>}
 
-      {!waiting && <div>
-            <Board socket={socket} />
+      {!waiting && <div className='grid grid-cols-10'>
+            
+            <div className='col-span-6'> <Board socket={socket} />  </div>
+            <div className='col-span-2'>chats</div>
+        
+            
 
         </div>}
     </div>
