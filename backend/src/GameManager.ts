@@ -42,12 +42,12 @@ export class GameManger{
                     const player = new Player(socket);
                     const game = new Game(this.pendingUser,player);
                     this.games.push(game);
-                    socket.send(JSON.stringify({
+                    /* socket.send(JSON.stringify({
                         status:"started"
                     }));
                     this.pendingUser.getSocket().send(JSON.stringify({
                         status:"started"
-                    }))
+                    })) */
                     this.pendingUser.setTurn();
                     this.pendingUser = null;
                     game.runGame();
