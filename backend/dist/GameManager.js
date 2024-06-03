@@ -35,12 +35,12 @@ class GameManger {
                     const player = new Player_1.Player(socket);
                     const game = new Game_1.Game(this.pendingUser, player);
                     this.games.push(game);
-                    socket.send(JSON.stringify({
-                        status: "started"
+                    /* socket.send(JSON.stringify({
+                        status:"started"
                     }));
                     this.pendingUser.getSocket().send(JSON.stringify({
-                        status: "started"
-                    }));
+                        status:"started"
+                    })) */
                     this.pendingUser.setTurn();
                     this.pendingUser = null;
                     game.runGame();

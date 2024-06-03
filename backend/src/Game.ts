@@ -40,8 +40,17 @@ export class Game{
            
 
                 const words = threeWords();
-                if (this.player1.getTurn()) this.player1.getSocket().send(JSON.stringify({status:"SEL_WORD",words}));
-                if (this.player2.getTurn()) this.player2.getSocket().send(JSON.stringify({status:"SEL_WORD",words}));
+                if (this.player1.getTurn()){
+                    this.player1.getSocket().send(JSON.stringify({status:"SEL_WORD",words}))
+                }else{
+                    this.player1.getSocket().send(JSON.stringify({status:"started"}))
+                }
+                if (this.player2.getTurn()){
+                    this.player2.getSocket().send(JSON.stringify({status:"SEL_WORD",words}));
+                }else{
+                    this.player2.getSocket().send(JSON.stringify({status:"started"}));
+                }
+
                 this.attempts = 9;
                 this.currRoundScore = 1000;
                 
@@ -139,6 +148,8 @@ export class Game{
         this.player2.getSocket().send(JSON.stringify({
             status:"WORD_SET"
         }))
+
+        console.log(this.choosenWord);
     }
 
     checkWord(word:string,socket:WebSocket){
