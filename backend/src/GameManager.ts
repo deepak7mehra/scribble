@@ -28,7 +28,7 @@ export class GameManger{
         
     }
 
-    private addHandler(socket: WebSocket){
+    private  addHandler(socket: WebSocket){
         socket.on("message",(data)=>{
             const message = JSON.parse(data.toString());
             if (message.type === "INIT_GAME"){
@@ -42,12 +42,14 @@ export class GameManger{
                     const player = new Player(socket);
                     const game = new Game(this.pendingUser,player);
                     this.games.push(game);
-                    socket.send(JSON.stringify({
+                     socket.send(JSON.stringify({
                         status:"started"
                     }));
                     this.pendingUser.getSocket().send(JSON.stringify({
                         status:"started"
                     }))
+
+                    
                     this.pendingUser.setTurn();
                     this.pendingUser = null;
                     game.runGame();
@@ -116,6 +118,14 @@ export class GameManger{
                 }
 
             }
+        })
+
+        socket.on("close",()=>{
+            console.log("socket is close")
+        })
+
+        socket.on("open",()=>{
+            console.log("socket is open")
         })
     }
 

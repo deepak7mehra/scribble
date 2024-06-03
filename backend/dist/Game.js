@@ -21,11 +21,13 @@ class Game {
     }
     runGame() {
         // send the three words
+        console.log("this is not exceuting ");
+        console.log(this.player1.getSocket().OPEN);
         const words = (0, util_1.threeWords)();
         if (this.player1.getTurn())
-            this.player1.getSocket().send(JSON.stringify({ words }));
+            this.player1.getSocket().send(JSON.stringify({ status: "SEL_WORD", words }));
         if (this.player2.getTurn())
-            this.player2.getSocket().send(JSON.stringify({ words }));
+            this.player2.getSocket().send(JSON.stringify({ status: "SEL_WORD", words }));
         this.attempts = 9;
         this.currRoundScore = 1000;
     }
